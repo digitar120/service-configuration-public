@@ -1,0 +1,62 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+      routes[0]:
+        id: shopping-cart-app
+        uri: lb://SHOPPING-CART-APP
+        predicates[0]: Path=/cart/**, /products/**
+
+      routes[1]:
+        id: users-app
+        uri: lb://USERS-APP
+        predicates[0]: Path=/user/**
+
+      routes[2]:
+        id: auth
+        uri: https://localhost:9090
+        predicates[0]: Path=/auth
+
+      default-filters: TokenRelay
+
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://${AUTHSERVER_IP}:${AUTHSERVER_PORT}/realms/digitar120-shopping-cart-project-realm
+
+        registration:
+          spring-cloud-gateway-client:
+            client-id: spring-cloud-gateway-client
+            client-secret: Cl9WL7FhnazS9uDPmdmVarAehvyr44ek
+            provider: keycloak
+            authorization-grant-type: authorization_code
+            redirect-uri: http://${REDIRECT_URI}:${REDIRECT_PORT}/login/oauth2/code/spring-cloud-gateway-client
+            scope: openid
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+    prefer-ip-address: true
+
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_IP}:${EUREKA_PORT}/eureka/
+
+  output:
+    ansi:
+      enabled: ALWAYS
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
