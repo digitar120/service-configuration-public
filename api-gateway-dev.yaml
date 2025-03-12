@@ -5,6 +5,7 @@ spring:
         locator:
           enabled: true
 
+      # Managed routes
       routes[0]:
         id: shopping-cart-app
         uri: lb://SHOPPING-CART-APP
@@ -21,8 +22,11 @@ spring:
       ribbon:
         enabled: false
 
+
   security:
     oauth2:
+
+      # Authorization server location
       resourceserver:
         jwt:
           issuer-uri: http://${AUTHSERVER_IP}:${AUTHSERVER_PORT}/realms/digitar120-shopping-cart-project-realm
@@ -32,6 +36,7 @@ spring:
           keycloak:
             issuer-uri: http://${AUTHSERVER_IP}:${AUTHSERVER_PORT}/realms/digitar120-shopping-cart-project-realm
 
+        # Client configuration for calls to the main microservices
         registration:
           spring-cloud-gateway-client:
             client-id: spring-cloud-gateway-client
@@ -41,6 +46,7 @@ spring:
             redirect-uri: http://${REDIRECT_URI}:${REDIRECT_PORT}/login/oauth2/code/spring-cloud-gateway-client
             scope: openid
 
+# Eureka client configuration
 eureka:
   instance:
     instance-id: ${spring.application.name}:${random.uuid}
