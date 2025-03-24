@@ -1,0 +1,75 @@
+usersapp:
+  property: Users App Development Configuration
+
+server:
+  port: 9001
+
+spring:
+  # Colors in stdout
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  application:
+    name: users-app
+
+  # SQL database config
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: a
+    password: a
+    url: "jdbc:h2:mem:usersapp;DB_CLOSE_ON_EXIT=false;NON_KEYWORDS=user"
+      # Workaround for a design defect. USER is an SQL-reserved keyword. Using a database with the same name produces
+      # many errors. In the context of this application, that keyword can be "unregistered", allowing the app to work
+      # without redesigning the database.
+
+      # Workaround. El servicio trata con una tabla SQL llamada "USER" que es palabra reservada de H2 (¿o SQL?). Se
+      # pueden prevenir errores en los archivos schema y data, pero no en las sentencias hechas por JPA.Próximos
+    # microservicios tendrán una tabla de usuarios con otro nombre.
+
+    initialization-mode: always
+    defer-datasource-initialization: true
+
+  # Enable H2's web-based console
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # JPA configuration for programmatic database access
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: none
+
+  # Inter-service messaging
+  rabbitmq:
+    host: ${RABBITMQ_IP}
+
+    # Default port is 5672
+    port: ${RABBITMQ_PORT}
+
+    username: guest
+    password: guest
+
+  sql:
+    init:
+      mode: always
+
+# Eureka client configuration
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+    prefer-ip-address: true
+
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_IP}:${EUREKA_PORT}/eureka/
+
+management:
+  endpoint:
+    web:
+      exposure:
+        include: "*"

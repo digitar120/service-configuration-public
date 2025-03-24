@@ -1,0 +1,85 @@
+usersapp:
+  property: Shopping Cart App Development Configuration
+
+server:
+  port: ${APPPORT}
+
+# User microservice location
+users-service-ip: ${USERS_IP}
+users-service-port: ${USERS_PORT}
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        web: DEBUG
+
+#hibernate: DEBUG
+
+spring:
+  output:
+    # Colors in stdout
+    ansi:
+      enabled: ALWAYS
+
+  application:
+    name: shopping-cart-app
+
+  # Database access configuration
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: a
+    password: a
+    url: "jdbc:h2:mem:shoppingcartapp;DB_CLOSE_ON_EXIT=false"
+
+  # Enable H2's web console
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # JPA configuration for programmatic database access
+  jpa:
+    # Print SQL queries to stdout
+    show-sql: true
+
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: none
+
+  # Interservice messaging
+  rabbitmq:
+    host: ${RABBITMQ_IP}
+    port: ${RABBITMQ_PORT}
+    username: guest
+    password: guest
+
+  # FeignClient-specific configuration
+  cloud:
+    openfeign:
+
+      circuitbreaker:
+        enabled: true
+
+# Eureka client configuration
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+    prefer-ip-address: true
+
+  # Eureka server location
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_IP}:${EUREKA_PORT}/eureka/
+
+feign:
+  circuitbreaker:
+    enabled: true
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+        #include: "*"
