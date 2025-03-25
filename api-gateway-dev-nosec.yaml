@@ -16,7 +16,7 @@ spring:
         uri: lb://USERS-APP
         predicates[0]: Path=/user/**
 
-      default-filters: TokenRelay
+      #default-filters: TokenRelay
 
     loadbalancer:
       ribbon:
