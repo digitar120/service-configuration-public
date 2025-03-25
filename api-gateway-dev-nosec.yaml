@@ -19,12 +19,12 @@ spring:
       routes[2]:
         id: cart-swagger
         uri: lb://SHOPPING-CART-APP/swagger-ui.html
-        predicates[0]: Path=/cart/apidocs
+        predicates[0]: Path=/apidocs/cart
 
       routes[3]:
         id: user-swagger
         uri: lb://USERS-APP/swagger-ui/index.html
-        predicates[0]: Path=/user/apidocs
+        predicates[0]: Path=/apidocs/user
 
       #default-filters: TokenRelay
 
