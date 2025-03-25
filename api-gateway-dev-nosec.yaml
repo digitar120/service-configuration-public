@@ -16,6 +16,16 @@ spring:
         uri: lb://USERS-APP
         predicates[0]: Path=/user/**
 
+      routes[2]:
+        id: cart-swagger
+        uri: lb://SHOPPING-CART-APP/swagger-ui.html
+        predicates[0]: Path=/cart/apidocs
+
+      routes[3]:
+        id: user-swagger
+        uri: lb://USERS-APP/swagger-ui/index.html
+        predicates[0]: Path=/user/apidocs
+
       #default-filters: TokenRelay
 
     loadbalancer:
