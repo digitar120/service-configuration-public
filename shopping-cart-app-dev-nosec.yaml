@@ -78,6 +78,13 @@ feign:
   circuitbreaker:
     enabled: true
 
+# Custom api-docs path
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /cart/api-docs
+
 #management:
 #  endpoints:
 #    web:

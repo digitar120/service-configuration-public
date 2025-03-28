@@ -73,3 +73,10 @@ management:
     web:
       exposure:
         include: "*"
+
+# Custom api-docs path
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /user/api-docs
