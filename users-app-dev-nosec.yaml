@@ -74,9 +74,9 @@ management:
       exposure:
         include: "*"
 
-# Custom api-docs path
-springfox:
-  documentation:
-    swagger:
-      v2:
-        path: /user/api-docs
+springdoc:
+  # packagesToScan listings must be absolute
+  packagesToScan: com.digitar120.usersapp.controller
+  pathsToMatch: /user/**
+  swagger-ui:
+    path: /user/swagger
