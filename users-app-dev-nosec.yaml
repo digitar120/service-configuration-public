@@ -80,3 +80,5 @@ springdoc:
   pathsToMatch: /user/**
   swagger-ui:
     path: /user/swagger
+  api-docs:
+    path: /user/api-docs
