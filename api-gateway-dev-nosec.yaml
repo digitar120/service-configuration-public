@@ -6,17 +6,33 @@ spring:
           enabled: true
 
       # Managed routes
-      routes[0]:
-        id: shopping-cart-app
-        uri: lb://SHOPPING-CART-APP
-        predicates[0]: Path=/cart/**, /products/**
+      routes:
+        - id: shopping-cart-app
+          uri: lb://SHOPPING-CART-APP
+          predicates:
+            - Path=/cart/**, /products/**
 
-      routes[1]:
-        id: users-app
-        uri: lb://USERS-APP
-        predicates[0]: Path=/user/**
+        - id: users-app
+          uri: lb://USERS-APP
+          predicates:
+            - Path=/user/**
 
-      #default-filters: TokenRelay
+        # Swagger UI path is hard-coded in Springfox.
+        - id: swagger-shopping-cart
+          uri: lb://SHOPPING-CART-APP
+          predicates:
+            - Path=/swagger/cart
+          filters:
+            - RedirectTo=302, http://${CARTS_IP}:${CARTS_PORT}/swagger-ui.html
+
+        # Technically not needed, but adding anyway to keep consistency in the path with the above
+        - id: swagger-users
+          uri: lb://USERS-APP
+          predicates:
+            - Path=/swagger/user
+          filters:
+            - RedirectTo=302, http://${USERS_IP}:${USERS_PORT}/user/swagger
+
 
     loadbalancer:
       ribbon:
