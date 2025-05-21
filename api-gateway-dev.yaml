@@ -6,15 +6,16 @@ spring:
           enabled: true
 
       # Managed routes
-      routes[0]:
-        id: shopping-cart-app
-        uri: lb://SHOPPING-CART-APP
-        predicates[0]: Path=/cart/**, /products/**
+      routes:
+        - id: shopping-cart-app
+          uri: lb://SHOPPING-CART-APP
+          predicates:
+            - Path=/cart/**, /products/**
 
-      routes[1]:
-        id: users-app
-        uri: lb://USERS-APP
-        predicates[0]: Path=/user/**
+        - id: users-app
+          uri: lb://USERS-APP
+          predicates:
+            - Path=/user/**
 
       default-filters: TokenRelay
 
