@@ -41,6 +41,7 @@ spring:
     instance:
       instance-id: ${spring.application.name}:${random.uuid}
       prefer-ip-address: true
+      ipAddress: host.docker.internal
 
     client:
       serviceUrl:
