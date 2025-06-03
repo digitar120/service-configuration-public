@@ -23,46 +23,35 @@ spring:
       ribbon:
         enabled: false
 
+    security:
+      oauth2:
 
-  security:
-    oauth2:
-
-      # Authorization server location
-      resourceserver:
-        jwt:
-          issuer-uri: http://${AUTHSERVER_IP}:${AUTHSERVER_PORT}/realms/digitar120-shopping-cart-project-realm
-
-      client:
-        provider:
-          keycloak:
+        # Authorization server location
+        resourceserver:
+          jwt:
             issuer-uri: http://${AUTHSERVER_IP}:${AUTHSERVER_PORT}/realms/digitar120-shopping-cart-project-realm
 
-        # Client configuration for calls to the main microservices
-        registration:
-          spring-cloud-gateway-client:
-            client-id: spring-cloud-gateway-client
-            client-secret: Cl9WL7FhnazS9uDPmdmVarAehvyr44ek
-            provider: keycloak
-            authorization-grant-type: authorization_code
-            redirect-uri: http://${REDIRECT_URI}:${REDIRECT_PORT}/login/oauth2/code/spring-cloud-gateway-client
-            scope: openid
+        client:
+          provider:
+            keycloak:
+              issuer-uri: http://${AUTHSERVER_IP}:${AUTHSERVER_PORT}/realms/digitar120-shopping-cart-project-realm
 
-# Eureka client configuration
-eureka:
-  instance:
-    instance-id: ${spring.application.name}:${random.uuid}
-    prefer-ip-address: true
+  # Eureka client configuration
+  eureka:
+    instance:
+      instance-id: ${spring.application.name}:${random.uuid}
+      prefer-ip-address: true
 
-  client:
-    serviceUrl:
-      defaultZone: http://${EUREKA_IP}:${EUREKA_PORT}/eureka/
+    client:
+      serviceUrl:
+        defaultZone: http://${EUREKA_IP}:${EUREKA_PORT}/eureka/
 
-  output:
-    ansi:
-      enabled: ALWAYS
+    output:
+      ansi:
+        enabled: ALWAYS
 
-logging:
-  level:
-    org:
-      springframework:
-        security: DEBUG
+  logging:
+    level:
+      org:
+        springframework:
+          security: DEBUG
