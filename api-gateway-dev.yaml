@@ -32,9 +32,26 @@ spring:
             issuer-uri: http://${AUTHSERVER_IP}:${AUTHSERVER_PORT}/realms/digitar120-shopping-cart-project-realm
 
         client:
+          registration:
+            keycloak:
+              client-name: spring-cloud-gateway-client
+
+              authorization-grant-type: client_credentials
+              client-authentication-method: client_secret_basic
+
+              client-id: spring-cloud-gateway-client
+              client-secret: Cl9WL7FhnazS9uDPmdmVarAehvyr44ek
+
+              redirect-uri: http://host.docker.internal:8080/login/oauth2/code/spring-cloud-gateway-client
+              jwk-set-uri: http://${AUTHSERVER_IP}:${AUTHSERVER_PORT}/realms/digitar120-shopping-cart-project-realm/protocol/openid-connect/certs
+              scope: openid
+
+
           provider:
             keycloak:
               issuer-uri: http://${AUTHSERVER_IP}:${AUTHSERVER_PORT}/realms/digitar120-shopping-cart-project-realm
+              token-uri: http://${AUTHSERVER_IP}:${AUTHSERVER_PORT}/realms/digitar120-shopping-cart-project-realm/protocol/openid-connect/token
+              authorization-uri: http://${AUTHSERVER_IP}:${AUTHSERVER_PORT}/realms/digitar120-shopping-cart-project-realm/protocol/openid-connect/auth
 
   # Eureka client configuration
   eureka:
